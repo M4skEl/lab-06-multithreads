@@ -32,14 +32,16 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 add_library(lab-06-multithreads STATIC
-        # enum your files and delete this comment
-        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
+        sources/HashData.cpp include/HashData.h)
+
 add_executable(tests
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
         )
 
 add_executable(main
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp)
+
 target_link_libraries(lab-06-multithreads  Boost::log Boost::thread)
 target_link_libraries(tests Boost::log Boost::thread)
 target_link_libraries(main Boost::log Boost::thread)
