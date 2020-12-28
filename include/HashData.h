@@ -53,10 +53,10 @@ std::mutex mtx;
 
 std::vector<HashData> hashes;
 
-HashData FindHash() {
+void FindHash() {
   HashData hd;
   size_t start_time = clock();
-  // for (;;) {
+   for (;;) {
   hd.data = RandData();
   picosha2::hash256_hex_string(hd.data, hd.hash);
   if (is_right_hash(hd.hash)) {
@@ -72,9 +72,9 @@ HashData FindHash() {
     HashData right_hash(hd.time, hd.hash, hd.data);
     hashes.push_back(right_hash);
     mtx.unlock();
+    break;
   }
-  //}
-  return hd;
+  }
 }
 
 #endif  // LAB_06_MULTITHREADS_HASHDATA_H

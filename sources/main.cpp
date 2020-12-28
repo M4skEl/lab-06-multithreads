@@ -28,18 +28,18 @@ int main() {
   vector<std::thread> thread_pull;
 
   for (size_t i = 0; i < total_threads; i++) {
-    thread_pull.emplace_back(std::thread(FindHash()));
+    thread_pull.push_back(std::thread(FindHash()));
   }
 
-  HashData hs;
-  cout << hs.hash << endl;
-  std::string h;
-  std::string src_str = std::to_string(rand());
-  cout << src_str << endl;
-  picosha2::hash256_hex_string(src_str, h);
-  cout << h << endl;
-  h = "89320b8ca6f530a22fda049b0eaedd784a94f19a48e9ccfabeb7d6253e9e0000";
-  cout << h << endl;
-  cout << is_right_hash(h) << endl;
+//  HashData hs;
+//  cout << hs.hash << endl;
+//  std::string h;
+//  std::string src_str = std::to_string(rand());
+//  cout << src_str << endl;
+//  picosha2::hash256_hex_string(src_str, h);
+//  cout << h << endl;
+//  h = "89320b8ca6f530a22fda049b0eaedd784a94f19a48e9ccfabeb7d6253e9e0000";
+//  cout << h << endl;
+//  cout << is_right_hash(h) << endl;
   return 0;
 }
