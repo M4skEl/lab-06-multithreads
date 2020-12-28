@@ -28,6 +28,7 @@ int main() {
   vector<std::thread> thread_pull;
 
   for (size_t i = 0; i < total_threads; i++) {
+
     thread_pull.push_back(std::thread(FindHash()));
   }
 
