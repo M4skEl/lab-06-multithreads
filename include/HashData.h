@@ -6,6 +6,7 @@
 #define LAB_06_MULTITHREADS_HASHDATA_H
 
 #include <ctime>
+#include <iostream>
 #include <mutex>
 #include <random>
 #include <string>
@@ -24,8 +25,6 @@ class HashData {
   HashData() = default;
   HashData(const HashData& hd);
   HashData(size_t t, std::string h, std::string d);
-
-  // std::ostream& operator<<(const HashData& hd,std::ostream out);
 };
 
 HashData::HashData(const HashData& hd)
@@ -33,13 +32,6 @@ HashData::HashData(const HashData& hd)
 
 HashData::HashData(size_t t, std::string h, std::string d)
     : time(t), hash(h), data(d) {}
-
-std::ostream& operator<<(std::ostream& out, const HashData& hd) {
-  out << "time: " << hd.time << std::endl
-      << "hash: " << hd.hash << std::endl
-      << "data: " << hd.data;
-  return out;
-}
 
 bool is_right_hash(const std::string& str) {
   std::string substr = "0000";
@@ -51,13 +43,16 @@ std::string RandData() { return std::to_string(rand()); }
 
 void WriteHash(std::ofstream& out, const HashData& hd, std::string pth) {
   out.open(pth, std::ofstream::app);
-  if (!out.is_open()) std::cout<<"Recording error"<<std::endl;
-  out << "     {\n      \"timestamp\":  " << hd.time
-      << ",\n      \"hash\": \"" << hd.hash << "\",\n      \"data\": \""
-      << hd.data << "\"\n     },\n";
+  if (!out.is_open()) std::cout << "Recording error" << std::endl;
+  out << "     {\n      \"timestamp\":  " << hd.time << ",\n      \"hash\": \""
+      << hd.hash << "\",\n      \"data\": \"" << hd.data << "\"\n     },\n";
   out.close();
 }
 
+void WriteHash(std::ostream& out, const HashData& hd) {
+  out << "     {\n      \"timestamp\":  " << hd.time << ",\n      \"hash\": \""
+      << hd.hash << "\",\n      \"data\": \"" << hd.data << "\",\n     },\n";
+}
 
 std::mutex mtx;
 std::vector<HashData> hashes;
@@ -80,7 +75,7 @@ void FindHash(std::string path) {
       mtx.lock();
       // Write to file
       std::ofstream output;
-      WriteHash(output,hd, path);
+      WriteHash(output, hd, path);
       HashData right_hash(hd.time, hd.hash, hd.data);
       hashes.push_back(right_hash);
       mtx.unlock();
