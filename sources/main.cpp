@@ -3,14 +3,14 @@
 //
 #include <picosha2.h>
 
+#include <csignal>
 #include <ctime>
 #include <iostream>
-#include <vector>
 #include <string>
+#include <thread>
+#include <vector>
 
 #include "HashData.h"
-#include "boost/thread.hpp"
-#include "thread"
 
 using std::cout;
 using std::endl;
@@ -33,6 +33,8 @@ int main(int argc, char* argv[]) {
   head_file.open(path);
   head_file << "[\n";
   head_file.close();
+
+
 
   for (size_t i = 0; i < total_threads; i++) {
     thread_pull.push_back(std::thread(FindHash, path));
